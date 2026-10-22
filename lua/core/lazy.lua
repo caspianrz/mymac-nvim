@@ -25,6 +25,7 @@ local imports = {
 
 local profiles = {
     rust = "plugins.profiles.rust-plugins",
+	cpp = "plugins.profiles.cpp-plugins",
 }
 
 if profiles[profile] then
