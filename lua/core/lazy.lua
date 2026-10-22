@@ -1,9 +1,3 @@
--- ┌──────────────┐
--- │ ┬  ┌─┐┌─┐┬ ┬ │
--- │ │  ├─┤┌─┘└┬┘ │
--- │ ┴─┘┴ ┴└─┘ ┴  │
--- └──────────────┘
-
 local lazypath = vim.fn.stdpath('data') .. '/lazy/lazy.nvim'
 if not vim.uv.fs_stat(lazypath) then
 	local lazyrepo = 'https://github.com/folke/lazy.nvim.git'
@@ -23,11 +17,18 @@ if not vim.uv.fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
-require('lazy').setup({
-	spec = {
-		{ import = 'plugins' },
-	},
-	install = {},
-	checker = { enabled = true },
-	change_detection = { notify = false },
-})
+local profile = vim.g.nvim_profile
+
+local imports = {
+    { import = "plugins.common" },
+}
+
+local profiles = {
+    rust = "plugins.profiles.rust-plugins",
+}
+
+if profiles[profile] then
+    table.insert(imports, { import = profiles[profile] })
+end
+
+require("lazy").setup(imports)
